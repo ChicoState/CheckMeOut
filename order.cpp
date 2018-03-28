@@ -14,6 +14,7 @@ void order::addItem(item i) {
   if( !closed )
   {
     itemList.push_back(i);
+    notifyObservers();
   }
 }
 
@@ -40,4 +41,5 @@ double order::getTotal() {
 double order::balance(double paid) {
   closed = true;
   return getTotal() - paid;
+  notifyObservers();
 }

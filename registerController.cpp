@@ -8,6 +8,7 @@ registerController::registerController(StoreInventory * inventory, order * check
 {
   database = inventory;
   cart = checkout;
+  cart->addObserver(this);
 }
 
 void registerController::processOrder()
@@ -19,7 +20,7 @@ void registerController::processOrder()
   {
     std::cout<<"> ";
     std::cin>>command>>option;
-    
+
     if(command.compare("buy") == 0)
     {
       item add = database->lookup((int)option);
@@ -35,3 +36,12 @@ void registerController::processOrder()
   cart->balance(option);
   screen.displayFinalReceipt(*cart);
 }
+
+//Called when observed order is changed
+void registerController::update() {
+  screen.displayRunningTotal(*cart);
+}
+
+
+
+
